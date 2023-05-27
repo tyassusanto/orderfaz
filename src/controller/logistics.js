@@ -28,8 +28,46 @@ const addRoute = async (req, res, next) => {
     }
 }
 
+const searchRoute = async (req, res, next) => {
+    try {
+        const searchDestination = req.query.destination;
+        const searchOrigin = req.query.origin;
+        const sort = req.query.sort || 'destination';
+        const order = req.query.order || 'DESC';
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 15;
+        const offset = (page - 1) * limit;
+
+        const resProduct = await modelLogistics.searchRoute({
+            searchDestination,
+            searchOrigin,
+            sort,
+            order,
+            offset,
+            limit
+        })
+        const totalCount = await modelLogistics.countRoutes()
+        const [{ total }] = totalCount
+        res.status(200)
+        commonHelper.response(res, resProduct, 200, null, {
+            currentPage: page,
+            limitData: limit,
+            totalData: total,
+            totalPage: Math.ceil(total / limit)
+        })
+    } catch (error) {
+        console.log(error, 'error get')
+        res.status(500),
+            next({
+                status: 500,
+                message: 'Internal Server Error'
+            })
+    }
+}
+
 
 
 module.exports = {
-    addRoute
+    addRoute,
+    searchRoute
 }
