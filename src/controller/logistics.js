@@ -80,10 +80,30 @@ const deleteRoute = async (req, res, next) => {
     }
 };
 
-
+const updateRoute = async (req, res, next) => {
+    try {
+        const id = req.params.id;
+        const { logistic_name, amount, destination, origin, duration } = req.body
+        const data = {
+            logistic_name,
+            amount,
+            destination,
+            origin,
+            duration
+        };
+        const result = await modelLogistics.updateRoute(data, id);
+        commonHelper.response(res, data, 200, `Rote berhasil diupdate`)
+    } catch (error) {
+        console.log('error', error);
+        const err = new createError.InternalServerError();
+        console.log('err', err)
+        next(err);
+    }
+};
 
 module.exports = {
     addRoute,
     searchRoute,
-    deleteRoute
+    deleteRoute,
+    updateRoute
 }

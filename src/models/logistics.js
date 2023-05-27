@@ -77,8 +77,37 @@ const deleteRoute = (id) => {
             } else {
                 reject(error);
             }
-            console.log('query: ', query)
         });
+    });
+};
+
+const updateRoute = (updatedRoute, id) => {
+    return new Promise((resolve, reject) => {
+        connection.query(
+            "SELECT * FROM logistics WHERE logistic_name = ? AND destination = ? AND origin = ?",
+            [updatedRoute.logistic_name, updatedRoute.destination, updatedRoute.origin],
+            (error, result) => {
+                if (!error) {
+                    if (result.length > 0) {
+                        reject(new Error('Rute tersebut sudah tersedia'));
+                    } else {
+                        connection.query(
+                            "UPDATE logistics SET ? WHERE id_logistics = ?",
+                            [updatedRoute, id],
+                            (error, result) => {
+                                if (!error) {
+                                    resolve(result);
+                                } else {
+                                    reject(error);
+                                }
+                            }
+                        );
+                    }
+                } else {
+                    reject(error);
+                }
+            }
+        );
     });
 };
 
@@ -86,5 +115,6 @@ module.exports = {
     addRoute,
     searchRoute,
     countRoutes,
-    deleteRoute
+    deleteRoute,
+    updateRoute
 }
