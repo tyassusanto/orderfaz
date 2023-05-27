@@ -1,0 +1,411 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API Tracking Expedition",
+        "description": "Aplikasi sederhana untuk melacak ekspedisi yang tersedia",
+        "version": "1.0.0"
+    },
+    "server": [
+        {
+          "url": "http://localhost:3300",
+          "description": "Menggunakan jaringan lokal (localhost:3300)"
+        }
+      ],
+    "tags": [
+        {
+            "name": "Users",
+            "description": "Dokumentasi API untuk kebutuhan users"
+        },
+        {
+            "name": "Logistics",
+            "description": "Dokumentasi API untuk kebutuhan logistik"
+        }
+    ],
+    "paths": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Registrasi pengguna baru",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterRequest"
+                            },
+                            "example": {
+                                "name": "Tyas Susanto",
+                                "username": "tyasusan",
+                                "password": "password",
+                                "msisdn": "62+nomortelp"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukses"
+                    }
+                }
+            }
+        },
+        "/users/login": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Login pengguna",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/LoginRequest"
+                            },
+                            "example": {
+                                "username": "tyasusan",
+                                "password": "password"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukses"
+                    }
+                }
+            }
+        },
+        "/users/profile": {
+            "get": {
+                "tags": [
+                    "Users"
+                ],
+                "summary": "Mendapatkan profil pengguna",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukses"
+                    }
+                }
+            }
+        },
+        "/logistics/addroute": {
+            "post": {
+                "tags": [
+                    "Logistics"
+                ],
+                "summary": "Menambahkan rute baru",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/AddRouteRequest"
+                            },
+                            "example": {
+                                "logistic_name": "JNE",
+                                "amount": 9000,
+                                "destination": "Jakarta",
+                                "origin": "Bekasi",
+                                "duration": "1-2"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukses"
+                    }
+                }
+            }
+        },
+        "/logistics": {
+            "get": {
+                "tags": [
+                    "Logistics"
+                ],
+                "summary": "Mencari rute",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "origin",
+                        "in": "query",
+                        "description": "Lokasi asal",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "destination",
+                        "in": "query",
+                        "description": "Lokasi tujuan",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Halaman hasil pencarian",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Batas hasil pencarian per halaman",
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukses"
+                    }
+                }
+            }
+        },
+        "/logistics/delete/{id}": {
+            "delete": {
+                "tags": [
+                    "Logistics"
+                ],
+                "summary": "Hapus rute",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID rute yang akan dihapus",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Sukses"
+                    }
+                }
+            }
+        },
+        "/logistics/update/{id}": {
+            "put": {
+                "tags": [
+                    "Logistics"
+                ],
+                "summary": "Update rute",
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID rute yang akan diupdate",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateRouteRequest"
+                            },
+                            "example": {
+                                "logistic_name": "JNE1",
+                                "amount": 9000,
+                                "destination": "Jakarta",
+                                "origin": "Jakarta",
+                                "duration": "1-2"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Sukses"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "RegisterRequest": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "msisdn": {
+                        "type": "string"
+                    }
+                }
+            },
+            "LoginRequest": {
+                "type": "object",
+                "properties": {
+                    "username": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string",
+                        "format": "password"
+                    }
+                }
+            },
+            "LogisticsResponse": {
+                "type": "object",
+                "properties": {
+                    "id_logistics": {
+                        "type": "string",
+                        "description": "ID logistik",
+                        "example": "150a0e8d-91e9-4255-9031-b8bd8ad469c6"
+                    },
+                    "logistic_name": {
+                        "type": "string",
+                        "description": "Nama logistik",
+                        "example": "JNE"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Jumlah biaya",
+                        "example": 9000
+                    },
+                    "destination": {
+                        "type": "string",
+                        "description": "Tujuan",
+                        "example": "Jakarta"
+                    },
+                    "origin": {
+                        "type": "string",
+                        "description": "Asal",
+                        "example": "Bekasi"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "description": "Durasi",
+                        "example": "1-2"
+                    }
+                }
+            },
+            "AddRouteRequest": {
+                "type": "object",
+                "properties": {
+                    "logistic_name": {
+                        "type": "string",
+                        "description": "Nama logistik",
+                        "example": "JNE"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Jumlah biaya",
+                        "example": 9000
+                    },
+                    "destination": {
+                        "type": "string",
+                        "description": "Tujuan",
+                        "example": "Jakarta"
+                    },
+                    "origin": {
+                        "type": "string",
+                        "description": "Asal",
+                        "example": "Bekasi"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "description": "Durasi",
+                        "example": "1-2"
+                    }
+                }
+            },
+            "UpdateRouteRequest": {
+                "type": "object",
+                "properties": {
+                    "logistic_name": {
+                        "type": "string",
+                        "description": "Nama logistik",
+                        "example": "JNE1"
+                    },
+                    "amount": {
+                        "type": "number",
+                        "description": "Jumlah biaya",
+                        "example": 9000
+                    },
+                    "destination": {
+                        "type": "string",
+                        "description": "Tujuan",
+                        "example": "Jakarta"
+                    },
+                    "origin": {
+                        "type": "string",
+                        "description": "Asal",
+                        "example": "Jakarta"
+                    },
+                    "duration": {
+                        "type": "string",
+                        "description": "Durasi",
+                        "example": "1-2"
+                    }
+                }
+            },
+            "DeleteLogisticsRequest": {
+                "type": "object",
+                "properties": {
+                    "id": {
+                        "type": "string",
+                        "description": "ID logistik yang akan dihapus",
+                        "example": "150a0e8d-91e9-4255-9031-b8bd8ad469c6"
+                    }
+                },
+                "required": [
+                    "id"
+                ]
+            }
+        },
+        "securitySchemes": {
+            "BearerAuth": {
+                "type": "apiKey",
+                "in": "header",
+                "name": "Authorization"
+            }
+        }
+    }
+}

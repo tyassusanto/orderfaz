@@ -33,3 +33,6 @@ Buat file `.env` berdasarkan kebutuhan yaitu :
 ## Import Database
 
 1. Import file dump database ke dalam database yang telah dibuat ke database anda.
+
+## Dokumentasi API 
+`http://localhost:3300/api-docs/#/`
