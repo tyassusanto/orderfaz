@@ -68,8 +68,23 @@ const countRoutes = () => {
     });
 };
 
+const deleteRoute = (id) => {
+    return new Promise((resolve, reject) => {
+        const query = 'DELETE FROM logistics WHERE id_logistics = ?';
+        connection.query(query, id, (error, result) => {
+            if (!error) {
+                resolve(result);
+            } else {
+                reject(error);
+            }
+            console.log('query: ', query)
+        });
+    });
+};
+
 module.exports = {
     addRoute,
     searchRoute,
-    countRoutes
+    countRoutes,
+    deleteRoute
 }
