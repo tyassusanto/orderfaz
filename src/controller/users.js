@@ -85,7 +85,7 @@ const profile = async (req, res, next) => {
         const [user] = await modelUsers.findUsername(username);
         const result = {
             username : user.username,
-            name : user.username,
+            name : user.name,
             phone : user.msisdn
         }
         commonHelper.response(res, result, 200);
