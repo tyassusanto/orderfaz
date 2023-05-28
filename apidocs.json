@@ -5,10 +5,14 @@
         "description": "Aplikasi sederhana untuk melacak ekspedisi yang tersedia",
         "version": "1.0.0"
     },
-    "server": [
+    "servers": [
         {
           "url": "http://localhost:3300",
           "description": "Menggunakan jaringan lokal (localhost:3300)"
+        },
+        {
+          "url": "https://orderfaznew.vercel.app",
+          "description": "Menggunakan server Vercel"
         }
       ],
     "tags": [
@@ -36,8 +40,8 @@
                                 "$ref": "#/components/schemas/RegisterRequest"
                             },
                             "example": {
-                                "name": "Tyas Susanto",
-                                "username": "tyasusan",
+                                "name": "Nama Lengkap",
+                                "username": "username",
                                 "password": "password",
                                 "msisdn": "62+nomortelp"
                             }
@@ -65,7 +69,7 @@
                                 "$ref": "#/components/schemas/LoginRequest"
                             },
                             "example": {
-                                "username": "tyasusan",
+                                "username": "username",
                                 "password": "password"
                             }
                         }
@@ -115,11 +119,11 @@
                                 "$ref": "#/components/schemas/AddRouteRequest"
                             },
                             "example": {
-                                "logistic_name": "JNE",
-                                "amount": 9000,
-                                "destination": "Jakarta",
-                                "origin": "Bekasi",
-                                "duration": "1-2"
+                                "logistic_name": "Nama Logistik",
+                                "amount": "Biaya(hanya angka)",
+                                "destination": "Tujuan",
+                                "origin": "Asal",
+                                "duration": "Estimasi Durasi (1-2)"
                             }
                         }
                     }
@@ -242,11 +246,11 @@
                                 "$ref": "#/components/schemas/UpdateRouteRequest"
                             },
                             "example": {
-                                "logistic_name": "JNE1",
-                                "amount": 9000,
-                                "destination": "Jakarta",
-                                "origin": "Jakarta",
-                                "duration": "1-2"
+                                "logistic_name": "Nama Logistik Baru",
+                                "amount": "Biaya Baru(hanya angka)",
+                                "destination": "Tujuan Baru",
+                                "origin": "Asal Baru",
+                                "duration": "Estimasi Durasi Baru(1-2)"
                             }
                         }
                     }
@@ -265,17 +269,25 @@
                 "type": "object",
                 "properties": {
                     "username": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Username",
+                        "example": "JNE"
                     },
                     "password": {
                         "type": "string",
-                        "format": "password"
+                        "format": "password",
+                        "description": "password user",
+                        "example": "password123"
                     },
                     "name": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Nama User",
+                        "example": "Tyas Susanto"
                     },
                     "msisdn": {
-                        "type": "string"
+                        "type": "string",
+                        "description": "Nomor Telp",
+                        "example": "6282113359384"
                     }
                 }
             },

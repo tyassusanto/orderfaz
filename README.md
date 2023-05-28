@@ -35,4 +35,5 @@ Buat file `.env` berdasarkan kebutuhan yaitu :
 1. Import file dump database ke dalam database yang telah dibuat ke database anda.
 
 ## Dokumentasi API 
-http://localhost:3300/api-docs/#/
+1. Dengan jaringan local : http://localhost:3300/api-docs/
+2. Dengan server vercel : https://orderfaznew.vercel.app/api-docs/
